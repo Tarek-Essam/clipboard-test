@@ -1,0 +1,42 @@
+Ticket title
+Add custom id for agent when booking an agent for the first time
+
+Assumptions
+1- agent send apply request for open shifts
+
+description
+When a new agent is applied for a shift in a facility for the first time then the facility employee/admin
+can add a custom id for this agent when accepting the agent request.
+
+Acceptance Criteria
+
+Given that facility is accepting a request for an open shift from an agent for the first time.
+Then a pop up modal stating tha following:
+"This is first time to use this agent in you facility, please insert a unique identifier for this agent".
+Below this message a required input field to insert the agent id with an info badge when hovering on it, the following should be shown.
+- id can not be empty
+- id should be max 12 characters
+
+Given that facility is accepting a request for an open shift from an agent that worked with this facility before.
+Then the facility should be able to accept the request directly without the need to inset an id.
+
+Give that the facility is submitting the form without inserting an id for the agent.
+Then an error message should be appeared under the input field saying "agent id is required"
+
+Give that the facility is submitting the form with an id length bigger than 12 characters.
+Then an error message should be appeared under the input field saying "agent id length should be less that or equal 12 character"
+
+Implementation Details
+1- create a new table "Facility_agents" with the following properties:
+  - facility_agent_id (custom id inserted by facility)
+  - agent_id (foreign key of agents table)
+  - facility (facility id)
+2- accept request api should received an optional custom agent id.
+  - check if the agent is used before then accept action will work the same as before.
+  - if the agent is used for the first time and the id is not provided then an error should be thrown.
+  - create a new record in the Facility_agents table.
+  - add the custom id to shift metadata in shifts table.
+3- create UI changes
+
+
+Time 6h
